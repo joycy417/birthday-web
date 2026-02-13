@@ -331,6 +331,28 @@
       transform: scale(1.05);
       box-shadow: 0 0 15px gold;
     }
+
+    #countdown {
+      font-family: "Segoe UI", sans-serif;
+      font-size: 50px;
+      /* 比标题小 */
+      color: white;
+      letter-spacing: 3px;
+      /* 和标题类似 */
+      text-shadow: 0 0 30px #ff9ff3, 0 0 60px #f368e0;
+      margin-top: 30px;
+      transition: all 0.5s;
+      text-align: center;
+    }
+
+    /* 生日字体样式（和标题一致） */
+    .birthday-text {
+      font-size: 80px;
+      /* 和 h1 标题一样 */
+      letter-spacing: 5px;
+      text-shadow: 0 0 10px #fff, 0 0 30px #ff9ff3, 0 0 60px #f368e0;
+      color: white;
+    }
   </style>
 </head>
 
@@ -349,6 +371,9 @@
       <div class="flame"></div>
     </div>
   </div>
+  <div id="countdown" style="font-size:24px; margin-top:30px; color:gold;"></div>
+
+
 
   <div id="passwordArea" class="password-box" style="display:none;">
     <p class="pwd-title">请输入生日密码 🎁</p>
@@ -402,7 +427,40 @@
       }, 600);
     }
 
+    const birthdayMonth = 1; // 二月（注意 0 = 一月）
+    const birthdayDay = 14;  // 14日
 
+    function updateCountdown() {
+      const now = new Date();
+      const month = now.getMonth();
+      const day = now.getDate();
+      const countdownEl = document.getElementById("countdown");
+
+
+
+      if (month === birthdayMonth && day === birthdayDay) {
+        countdownEl.innerText = "生  日  快  乐！🎉";
+        countdownEl.classList.add("birthday-text");
+      } else {
+        countdownEl.classList.remove("birthday-text");
+
+        let nextBirthday = new Date(now.getFullYear(), birthdayMonth, birthdayDay);
+        if (now > nextBirthday) {
+          nextBirthday.setFullYear(now.getFullYear() + 1);
+        }
+        const diff = nextBirthday - now;
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("countdown").innerText =
+          `距离生日还有 ${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
+      }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
     function launchFireworkBurst() {
 
       const centerX = Math.random() * window.innerWidth;
@@ -460,7 +518,7 @@
     /* 🎁 密码跳转 */
     function checkPwd() {
       const pwd = document.getElementById("pwd").value;
-      if (pwd === "celebrity0302") {
+      if (pwd === "714412") {
         window.location.href = "secret.html";
       } else {
         alert("密码不对哦～");
@@ -491,9 +549,9 @@
     const starData = [
       { x: "15vw", y: "20vh", text: "2022年许下的愿望是2023年能骑摩托车载我兜风  25岁也要哦  -----娟娟 🌸" },
       { x: "80vw", y: "25vh", text: "梓心罗生日快乐！你是我最好的上班搭子，也是我最好的朋友！希望你能早日实现自己的愿望。BFF～-----Min✨" },
-      { x: "30vw", y: "60vh", text: "小猫头鹰生日快乐哟，要永远幸福健康平安，愿前路平坦万事顺遂！-----joycy🎂" },
+      { x: "30vw", y: "60vh", text: "生日快乐----from罗梓雨 💛" },
       { x: "70vw", y: "70vh", text: "新的一岁，多多幸福，多多快乐，多多健康，多多生日快乐！ -----Ashe 🌌" },
-      { x: "50vw", y: "15vh", text: "生日快乐----from罗梓雨 💛" }
+      { x: "50vw", y: "15vh", text: "小猫头鹰生日快乐哟，要永远幸福健康平安，愿前路平坦万事顺遂！-----joycy🎂" }
     ];
 
 
